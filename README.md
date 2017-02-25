@@ -1,0 +1,2 @@
+# MangoHacks
+Repository for MangoHacks
