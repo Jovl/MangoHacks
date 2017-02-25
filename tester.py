@@ -22,10 +22,10 @@
 # print(json.dumps(r.json(), sort_keys=True, indent=4, separators=(',', ': ')))
 
 # TODO: Example Instagram
-import requests
-import json
-
-payload = {'access_token': '42404802.114b636.262414e1e9324e88a8d1de70562b3039'}
-r = requests.get('https://api.instagram.com/v1/users/self/media/liked', params=payload)
-
-print(json.dumps(r.json(), sort_keys=True, indent=4, separators=(',', ': ')))
+# import requests
+# import json
+#
+# payload = {'access_token': '42404802.114b636.262414e1e9324e88a8d1de70562b3039'}
+# r = requests.get('https://api.instagram.com/v1/users/self/media/liked', params=payload)
+#
+# print(json.dumps(r.json(), sort_keys=True, indent=4, separators=(',', ': ')))

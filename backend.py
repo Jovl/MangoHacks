@@ -13,6 +13,7 @@ import requests
 import json
 import re
 from geopy.geocoders import Nominatim
+from clarifai.rest import ClarifaiApp
 
 payload = {'access_token': '42404802.114b636.262414e1e9324e88a8d1de70562b3039'}
 
@@ -37,7 +38,7 @@ def getHashtags():
     return hashtags
 
 
-def getLocation():
+def getLocations():
     places = []
     geolocator = Nominatim()
     r = requests.get('https://api.instagram.com/v1/users/self/media/liked', params=payload)
@@ -73,6 +74,29 @@ def getLocation():
             None
 
     print(places)
+    return places
+
+
+def getTags(picture):
+    app = ClarifaiApp("zHLcj-wack36gFK74waD7mrcfXX9eLJLd5D-26HY", "6bkZN7fpd9932i7dRd2uT278Qzejq4El7YMGijZx")
+    # get the general model
+    model = app.models.get("general-v1.3")
+    tags = []
+
+
+    # predict with the model
+    model_thing = model.predict_by_url(url='https://samples.clarifai.com/metro-north.jpg')
+    jsonified = json.dumps(model_thing, sort_keys=True, indent=4, separators=(',', ': '))
+    print(jsonified)
+    json_data = json.loads(jsonified)
+    for i in range(20):
+        tag = json_data["outputs"]["data"]["concepts"][i]["name"]
+        tags.append(tag)
+
+    print(tags)
+    return tags
+
 
 getLocation()
 getHashtags()
+# getTags()
