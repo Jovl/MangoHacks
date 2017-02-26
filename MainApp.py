@@ -28,4 +28,4 @@ def locations():
 
 
 if __name__ == "__main__":
-    app.run(port=80)       # set host= to
+    app.run(host='0.0.0.0', port=80)       # set host= to
