@@ -15,7 +15,7 @@
 # TODO: Example Airbnb
 # import requests
 # import json
-# 
+#
 # payloadBNB = {'client_id': '3092nxybyb0otqw18e8nh5nty', 'user_lat': '', 'user_lng': ''}
 # r = requests.get('https://api.airbnb.com/v2/search_results', params=payloadBNB)
 #
