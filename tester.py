@@ -13,13 +13,13 @@
 # print(json.dumps(model_thing, sort_keys=True, indent=4, separators=(',', ': ')))
 
 # TODO: Example Airbnb
-# import requests
-# import json
-#
-# payload = {'client_id': '3092nxybyb0otqw18e8nh5nty', 'location': 'Los%20Angeles%2C%20CA'}
-# r = requests.get('https://api.airbnb.com/v2/search_results', params=payload)
-#
-# print(json.dumps(r.json(), sort_keys=True, indent=4, separators=(',', ': ')))
+import requests
+import json
+
+payloadBNB = {'client_id': '3092nxybyb0otqw18e8nh5nty', 'user_lat': '', 'user_lng': ''}
+r = requests.get('https://api.airbnb.com/v2/search_results', params=payloadBNB)
+
+print(json.dumps(r.json(), sort_keys=True, indent=4, separators=(',', ': ')))
 
 # TODO: Example Instagram
 # import requests

@@ -39,14 +39,17 @@ def getHashtags():
 
 
 def getLocations():
-    places = []
     geolocator = Nominatim()
     r = requests.get('https://api.instagram.com/v1/users/self/media/liked', params=payload)
     jsonifier = json.dumps(r.json(), sort_keys=True, indent=4, separators=(',', ': '))
-    # print(jsonifier)
+    print(jsonifier)
+    locations = {}
+    locations['Location'] = []
+    y = 0
+    json_data = json.loads(jsonifier)
+    locations["Location"] = []
 
     for x in range(20):
-        json_data = json.loads(jsonifier)
         try:
             latitude = json_data["data"][x]["location"]["latitude"]
             longitude = json_data["data"][x]["location"]["longitude"]
@@ -55,26 +58,36 @@ def getLocations():
             lat_long = "%f, %f" % (latitude, longitude)
             location = geolocator.reverse(lat_long)
             raw = location.raw
-            # print(raw)
+            print(raw)
             rawJson = json.dumps(raw, sort_keys=True, indent=4, separators=(',', ': '))
             raw_json = json.loads(rawJson)
-            state = raw_json["address"]["state"]
-            places.append(state)
-            # print(state)
+
+
             try:
                 city = raw_json["address"]["city"]
-                places.append(city)
-                # print(city)
+                state = raw_json["address"]["state"]
+                location_str = city + ", " + state
+                image_url = json_data["data"][x]["images"]["standard_resolution"]["url"]
+                airbnb = 'https://api.airbnb.com/v2/search_results?client_id=3092nxybyb0otqw18e8nh5nty&user_lat=%s&user_lng=%s' % (
+                latitude, longitude)
+                locations["Location"] += [({"name": location_str, "image_url": image_url, "airbnb_url": airbnb})]
+
             except KeyError:
-                # print("no city")
-                None
+                city = "No city"
+                state = raw_json["address"]["state"]
+                location_str = city + ", " + state
+                image_url = json_data["data"][x]["images"]["standard_resolution"]["url"]
+                airbnb = 'https://api.airbnb.com/v2/search_results?client_id=3092nxybyb0otqw18e8nh5nty&user_lat=%s&user_lng=%s' % (
+                latitude, longitude)
+
+                locations["Location"] += [({"name": location_str, "image_url": image_url, "airbnb_url": airbnb})]
 
         except TypeError:
             # print("No location")
             None
 
-    print(places)
-    return places
+    print(locations)
+    return locations
 
 
 def getTags(picture):
@@ -82,7 +95,6 @@ def getTags(picture):
     # get the general model
     model = app.models.get("general-v1.3")
     tags = []
-
 
     # predict with the model
     model_thing = model.predict_by_url(url='https://samples.clarifai.com/metro-north.jpg')
@@ -97,6 +109,6 @@ def getTags(picture):
     return tags
 
 
-getLocation()
-getHashtags()
+getLocations()
+# getHashtags()
 # getTags()
