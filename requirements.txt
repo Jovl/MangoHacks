@@ -1,0 +1,4 @@
+Flask == 0.11.1
+jsonify == 0.5
+geopy == 1.11.0
+requests == 2.11.1
